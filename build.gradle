@@ -1,0 +1,108 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+    id 'signing'
+}
+
+group 'io.github.tranchitam'
+version '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly "org.projectlombok:lombok:$lombokVersion"
+    annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+
+    implementation "io.dropwizard:dropwizard-core:$dropwizardVersion"
+    implementation "io.dropwizard:dropwizard-assets:$dropwizardVersion"
+    implementation "io.dropwizard:dropwizard-views:$dropwizardVersion"
+    implementation "io.dropwizard:dropwizard-views-freemarker:$dropwizardVersion"
+    implementation "io.swagger.core.v3:swagger-jaxrs2:$swaggerJaxrs2Version"
+
+    testCompileOnly "org.projectlombok:lombok:$lombokVersion"
+    testAnnotationProcessor "org.projectlombok:lombok:$lombokVersion"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+def localProperties = new Properties()
+def localPropertiesFile = file('local.properties')
+try (def dataInputStream = localPropertiesFile.newDataInputStream()) {
+    localProperties.load(dataInputStream)
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = 'dropwizard-swagger-bundle'
+            from components.java
+            versionMapping {
+                usage('java-api') {
+                    fromResolutionOf('runtimeClasspath')
+                }
+                usage('java-runtime') {
+                    fromResolutionResult()
+                }
+            }
+            pom {
+                name = 'dropwizard-swagger-bundle'
+                description = 'A Dropwizard bundle that serves Swagger UI static content and loads Swagger endpoints.'
+                url = 'https://github.com/tranchitam/dropwizard-swagger-bundle'
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'tranchitam'
+                        name = 'Tran Chi Tam'
+                        email = 'tranchitams3201@gmail.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/tranchitam/dropwizard-swagger-bundle.git'
+                    developerConnection = 'scm:git:ssh://github.com/tranchitam/dropwizard-swagger-bundle.git'
+                    url = 'https://github.com/tranchitam/dropwizard-swagger-bundle/tree/main'
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = localProperties.getProperty("publish.repository.name")
+            credentials {
+                username = localProperties.getProperty("publish.repository.username")
+                password = localProperties.getProperty("publish.repository.passpword")
+            }
+            def repoUrl = localProperties.getProperty("publish.repository.url")
+            def snapshotsRepoUrl = localProperties.getProperty("publish.repository.snapshotUrl")
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : repoUrl
+        }
+    }
+}
+
+signing {
+    def signingPrivateKey = localProperties.getProperty("signing.privateKey")
+    def signingPassword = localProperties.getProperty("signing.password")
+    useInMemoryPgpKeys(signingPrivateKey, signingPassword)
+    sign publishing.publications.mavenJava
+}
+
+javadoc {
+    if(JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption('html5', true)
+    }
+}
+
+test {
+    useJUnitPlatform()
+}

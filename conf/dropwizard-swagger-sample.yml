@@ -1,0 +1,20 @@
+server:
+  rootPath: /api
+swagger:
+  resourcePackages:
+    - io.github.tranchitam.dropwizard.swagger.sample.resources
+  title: Dropwizard Swagger Bundle sample APIs
+  description: Dropwizard Swagger Bundle sample descriptions
+  termsOfServiceUrl: https://github.com/tranchitam
+  contactEmail: tranchitams3201@gmail.com
+  contactUrl: https://github.com/tranchitam
+  swaggerView:
+    title: Dropwizard Swagger Bundle sample APIs
+
+logging:
+  level: INFO
+  appenders:
+    - type: console
+      threshold: ALL
+      timeZone: UTC
+      target: stdout
