@@ -2,7 +2,7 @@ package io.github.tranchitam.dropwizard.swagger.configurations;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.github.tranchitam.dropwizard.swagger.contansts.Constants;
+import io.github.tranchitam.dropwizard.swagger.constants.Constants;
 import java.util.HashSet;
 import java.util.Set;
 import javax.annotation.Nullable;
@@ -56,5 +56,9 @@ public class SwaggerBundleConfiguration {
 
   @JsonProperty
   @Nullable
-  private String uriPrefix;
+  private String swaggerUriPrefix;
+
+  @JsonProperty
+  @Nullable
+  private String openApiUriPrefix;
 }

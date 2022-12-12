@@ -1,5 +1,6 @@
 server:
-  rootPath: /api
+  applicationContextPath: /application
+  rootPath: /root
 swagger:
   resourcePackages:
     - io.github.tranchitam.dropwizard.swagger.sample.resources
@@ -10,6 +11,8 @@ swagger:
   contactUrl: https://github.com/tranchitam
   swaggerView:
     title: Dropwizard Swagger Bundle sample APIs
+  swaggerUriPrefix: /swaggerPrefix
+  openApiUriPrefix: /openApiPrefix
 
 logging:
   level: INFO
