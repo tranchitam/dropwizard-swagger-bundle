@@ -1,11 +1,12 @@
 plugins {
     id 'java'
+    id 'java-library'
     id 'maven-publish'
     id 'signing'
 }
 
 group 'io.github.tranchitam'
-version '1.0.0'
+version '1.0.1'
 
 repositories {
     mavenCentral()
@@ -19,7 +20,7 @@ dependencies {
     implementation "io.dropwizard:dropwizard-assets:$dropwizardVersion"
     implementation "io.dropwizard:dropwizard-views:$dropwizardVersion"
     implementation "io.dropwizard:dropwizard-views-freemarker:$dropwizardVersion"
-    implementation "io.swagger.core.v3:swagger-jaxrs2:$swaggerJaxrs2Version"
+    api "io.swagger.core.v3:swagger-jaxrs2:$swaggerJaxrs2Version"
 
     testCompileOnly "org.projectlombok:lombok:$lombokVersion"
     testAnnotationProcessor "org.projectlombok:lombok:$lombokVersion"

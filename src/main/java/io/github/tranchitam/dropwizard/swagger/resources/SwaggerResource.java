@@ -12,23 +12,18 @@ import javax.ws.rs.core.MediaType;
 public class SwaggerResource {
 
   private final SwaggerViewConfiguration viewConfiguration;
-  private final String contextRoot;
-  private final String urlPattern;
+  private final String swaggerUiViewPath;
+  private final String openApiJsonViewPath;
 
-  public SwaggerResource(String urlPattern, SwaggerViewConfiguration viewConfiguration) {
-    this.urlPattern = urlPattern;
+  public SwaggerResource(String swaggerUiViewPath, String openApiJsonViewPath,
+      SwaggerViewConfiguration viewConfiguration) {
     this.viewConfiguration = viewConfiguration;
-    this.contextRoot = "/";
-  }
-
-  public SwaggerResource(String urlPattern, SwaggerViewConfiguration viewConfiguration, String contextRoot) {
-    this.viewConfiguration = viewConfiguration;
-    this.urlPattern = urlPattern;
-    this.contextRoot = contextRoot;
+    this.swaggerUiViewPath = swaggerUiViewPath;
+    this.openApiJsonViewPath = openApiJsonViewPath;
   }
 
   @GET
   public SwaggerView get() {
-    return new SwaggerView(contextRoot, urlPattern, viewConfiguration);
+    return new SwaggerView(swaggerUiViewPath, openApiJsonViewPath, viewConfiguration);
   }
 }
