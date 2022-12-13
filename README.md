@@ -14,7 +14,7 @@ How to use it
 <dependency>
     <groupId>io.github.tranchitam</groupId>
     <artifactId>dropwizard-swagger-bundle</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 
@@ -55,7 +55,26 @@ public void initialize(Bootstrap<YourConfiguration> bootstrap) {
 
 * As usual, add Swagger annotations to your resource classes and methods
 
-* Open a browser and hit `http://localhost:<your_port>/swagger`
+* By default, you can access swagger-ui via `http://localhost:<your_port>/swagger`. However, you can also configure the prefixes of `swagger dropwizard resource` and `openapi.json` by using `swaggerUriPrefix` and `openApiUriPrefix`.
+
+For example, with this below configurations, you can access swagger-ui via `http://localhost:<your_port>/application/root/swaggerPrefix/swagger`, and `openapi.json` via `http://localhost:<your_port>/application/root/openApiPrefix/openapi.json`
+```yaml
+server:
+  applicationContextPath: /application
+  rootPath: /root
+swagger:
+  resourcePackages:
+    - io.github.tranchitam.dropwizard.swagger.sample.resources
+  title: Dropwizard Swagger Bundle sample APIs
+  description: Dropwizard Swagger Bundle sample descriptions
+  termsOfServiceUrl: https://github.com/tranchitam
+  contactEmail: tranchitams3201@gmail.com
+  contactUrl: https://github.com/tranchitam
+  swaggerView:
+    title: Dropwizard Swagger Bundle sample APIs
+  swaggerUriPrefix: /swaggerPrefix
+  openApiUriPrefix: /openApiPrefix 
+```
 
 Additional Swagger configuration
 --------------------------------
